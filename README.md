@@ -1,22 +1,29 @@
-Role Name
+steamcmd_ansible_role
 =========
 
-A brief description of the role goes here.
+![Molecule](https://github.com/Eldius/steamcmd_ansible_role/workflows/Molecule/badge.svg)
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+None
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- `steamcmd_login_user`: User to login into Steam servers (default to 'anonymous')
+- `steamcmd_login_pass`: Pass to login into Steam servers (default to '')
+- `steamcmd_user`: OS username to run SteamCMD on (default to 'steam')
+- `steamcmd_home`: Steam OS user home folder (default to '/home/steam')
+- `steamcmd_installation_folder`: SteamCMD install folder (default to '/home/steam/Steam')
+- `steamcmd_command`: SteamCMD script name, `don't touch this, please` (fefault to './steamcmd.sh')
+- `steamcmd_download_link`: SteamCMD download link, `don't touch this too, please` (default to 'https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz')
+- `steamcmd_debug`: downloads the SteamCMD install folder as a `.tar.bz2` package (default to 'False')
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+None
 
 Example Playbook
 ----------------
@@ -25,14 +32,14 @@ Including an example of how to use your role (for instance, with variables passe
 
     - hosts: servers
       roles:
-         - { role: username.rolename, x: 42 }
+         - { role: username.rolename, steamcmd_login_user: user, steamcmd_login_pass: pass }
 
 License
 -------
 
-BSD
+GPL-2.0-or-later
 
 Author Information
 ------------------
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+My Github profile [Eldius](https://github.com/Eldius)
