@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include steamcmd_ansible_role"
+      include_role:
+        name: "steamcmd_ansible_role"
+      vars:
+        steamcmd_debug: 'True'
