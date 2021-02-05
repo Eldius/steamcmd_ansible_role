@@ -6,4 +6,4 @@
       include_role:
         name: "steamcmd_ansible_role"
       vars:
-        steamcmd_debug: 'True'
+        steamcmd_debug: 'False'
