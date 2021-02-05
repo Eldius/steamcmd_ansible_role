@@ -1,4 +1,0 @@
-@NoPromptForPassword 1
-@bCSForceNoCache 1
-login {{ steamcmd_login_user }} {{ steamcmd_login_pass }}
-quit

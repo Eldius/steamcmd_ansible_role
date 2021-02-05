@@ -1,6 +1,6 @@
 ---
 - name: Install dependencies
-  become: 'True'
+  become: "True"
   package:
     name:
       - curl
@@ -8,19 +8,19 @@
       - lib32gcc1
       - lib32stdc++6
     state: present
-    update_cache: 'True'
-    autoremove: 'True'
-    install_recommends: 'True'
+    update_cache: "True"
+    autoremove: "True"
+    install_recommends: "True"
 
 - name: Create Steam user
-  become: 'True'
+  become: "True"
   user:
     name: "{{ steamcmd_user }}"
-    system: 'True'
-    create_home: 'True'
+    system: "True"
+    create_home: "True"
 
 - name: Create SteamCMD installation script folder
-  become: 'True'
+  become: "True"
   become_user: "{{ steamcmd_user }}"
   file:
     path: "{{ steamcmd_installation_folder }}"
@@ -29,8 +29,8 @@
     mode: u=rwx,g=rwx,o=r
     state: directory
 
-- name: Unarchive a file with extra options
-  become: 'True'
+- name: Download and unarchive SteamCMD package
+  become: "True"
   become_user: "{{ steamcmd_user }}"
   unarchive:
     src: "{{ steamcmd_download_link }}"
@@ -38,26 +38,16 @@
     owner: "{{ steamcmd_user }}"
     group: "{{ steamcmd_user }}"
     mode: u=rwx,g=rwx,o=r
-    remote_src: 'True'
+    remote_src: "True"
   args:
     creates: "{{ steamcmd_installation_folder }}/steamcmd.sh"
 
-- name: Prepare login script
-  become: 'True'
-  become_user: "{{ steamcmd_user }}"
-  template:
-    src: login.txt
-    dest: "{{ steamcmd_installation_folder }}"
-    owner: "{{ steamcmd_user }}"
-    group: "{{ steamcmd_user }}"
-    mode: u=rw,g=rw,o=r
-
 - name: Login SteamCMD
-  become: 'True'
+  become: "True"
   become_user: "{{ steamcmd_user }}"
-  command: "{{ steamcmd_command }} +runscript {{ steamcmd_installation_folder }}/login.txt"
+  command: "{{ steamcmd_command }} +login {{ steamcmd_login_user }} {{ steamcmd_login_pass }} +quit"
   register: install_result
-  ignore_errors: 'True'
+  ignore_errors: "True"
   args:
     chdir: "{{ steamcmd_installation_folder }}"
     creates: "{{ steamcmd_installation_folder }}/package"
@@ -82,9 +72,8 @@
     msg: "debug: {{ steamcmd_debug }}"
   when: steamcmd_debug == 'True'
 
-
 - name: Pack install folder
-  become: 'True'
+  become: "True"
   become_user: "{{ steamcmd_user }}"
   community.general.archive:
     path: "{{ steamcmd_installation_folder }}"
@@ -96,7 +85,7 @@
   when: steamcmd_debug == 'True'
 
 - name: Copy packed files
-  become: 'True'
+  become: "True"
   become_user: "{{ steamcmd_user }}"
   fetch:
     src: "{{ steamcmd_installation_folder }}_pack.tar.bz2"
